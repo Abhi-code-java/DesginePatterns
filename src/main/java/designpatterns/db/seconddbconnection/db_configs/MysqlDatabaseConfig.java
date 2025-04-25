@@ -1,4 +1,4 @@
-package designpatterns.db.seconddbconnection;
+package designpatterns.db.seconddbconnection.db_configs;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -17,47 +17,49 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.Map;
-
+import java.util.Objects;
 
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef = "secondEntityManagerFactoryBean",
-        basePackages = "designpatterns.customer.repos.postgres",
-        transactionManagerRef = "secondTransactionManager"
+        entityManagerFactoryRef = "entityManagerFactoryBean",
+        basePackages = "designpatterns.customer.repos.mysql",
+        transactionManagerRef = "transactionManager"
 )
 
-public class PostgresConfig {
+public class MysqlDatabaseConfig {
     @Autowired
     private Environment environment;
-    @Bean("postgres")
-    @Primary
+@Bean("mysql")
+@Primary
     public DataSource dataSource(){
         DriverManagerDataSource dataSource=new DriverManagerDataSource();
-        dataSource.setUrl(environment.getProperty("postgres.datasource.jdbcUrl"));
-        dataSource.setUsername(environment.getProperty("postgres.datasource.username"));
-        dataSource.setPassword(environment.getProperty( "postgres.datasource.password"));
-        dataSource.setDriverClassName(environment.getProperty( "postgres.datasource.driver-class-name"));
+        dataSource.setUrl(environment.getProperty("spring.datasource.jdbcUrl"));
+        dataSource.setUsername(environment.getProperty("spring.datasource.username"));
+        dataSource.setPassword(environment.getProperty( "spring.datasource.password"));
+        dataSource.setDriverClassName(Objects.requireNonNull(environment.getProperty("spring.datasource.driver-class-name")));
         return dataSource;
     }
 
-    @Bean(name = "secondEntityManagerFactoryBean")
+    @Bean(name = "entityManagerFactoryBean")
     @Primary
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(){
         LocalContainerEntityManagerFactoryBean bean=new LocalContainerEntityManagerFactoryBean();
         JpaVendorAdapter adaptor=new HibernateJpaVendorAdapter();
         bean.setJpaVendorAdapter(adaptor);
 
-        Map<String,String> map=new HashMap<>();
-        map.put("hibernate.dialect","org.hibernate.dialect.PostgreSQLDialect");
-        map.put("spring.jpa.show-sql","true");
-        map.put("hibernate.hbm2ddl.auto","update");
-        bean.setJpaPropertyMap(map);
-        bean.setPackagesToScan("designpatterns.customer.prostEntity");
         bean.setDataSource(dataSource());
+
+        Map<String,String>map=new HashMap<>();
+        map.put("spring.jpa.properties.hibernate.dialect","org.hibernate.dialect.MySQLDialect");
+        map.put("spring.jpa.show-sql","true");
+        map.put("hibernate.hbm2ddl.auto", "update");
+        bean.setJpaPropertyMap(map);
+        bean.setPackagesToScan("designpatterns.customer.entity");
+
         return bean;
     }
-    @Bean(name ="secondTransactionManager" )
+    @Bean(name ="transactionManager" )
     public PlatformTransactionManager transactionManager(){
         JpaTransactionManager manager=new JpaTransactionManager();
         manager.setEntityManagerFactory(entityManagerFactoryBean().getObject());

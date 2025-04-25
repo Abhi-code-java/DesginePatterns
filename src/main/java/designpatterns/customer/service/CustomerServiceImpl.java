@@ -8,7 +8,12 @@ import designpatterns.customer.entity.Customer;
 import designpatterns.customer.prostEntity.Products;
 import designpatterns.customer.repos.mysql.CustomerRepo;
 import designpatterns.customer.repos.postgres.PostGresRepository;
+import designpatterns.db.seconddbconnection.singletondesgine.MySQLConnectionSingleton;
 import org.springframework.stereotype.Service;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 @Service
 public class CustomerServiceImpl implements CustomerService{
@@ -27,6 +32,17 @@ public class CustomerServiceImpl implements CustomerService{
         customerRepo.save(customer);
 //        postGresRepository.save(customer);
         return FROMeNTITY(customer);
+    }
+    public void addCustomer(int id, String name) {
+        try {
+            Connection conn = MySQLConnectionSingleton.getInstance().getConnection();
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO customer (id, name) VALUES (?, ?)");
+            ps.setInt(1, id);
+            ps.setString(2, name);
+            ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
