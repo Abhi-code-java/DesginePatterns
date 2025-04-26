@@ -1,9 +1,10 @@
-package designpatterns.factoryPattern.dbs.factory;
+package designpatterns.factoryPattern.dbs.concrete_factory;
 
 
-import designpatterns.factoryPattern.dbs.postgres.PostGesFindById;
-import designpatterns.factoryPattern.dbs.postgres.PostGresFindAll;
-import designpatterns.factoryPattern.dbs.postgres.PostGresFindByName;
+
+import designpatterns.factoryPattern.dbs.operations.postgres.PostGesFindById;
+import designpatterns.factoryPattern.dbs.operations.postgres.PostGresFindAll;
+import designpatterns.factoryPattern.dbs.operations.postgres.PostGresFindByName;
 import designpatterns.factoryPattern.queries.FindAll;
 import designpatterns.factoryPattern.queries.FindById;
 import designpatterns.factoryPattern.queries.FindByName;

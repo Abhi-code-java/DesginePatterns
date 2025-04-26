@@ -1,9 +1,9 @@
-package designpatterns.factoryPattern.dbs.factory;
+package designpatterns.factoryPattern.dbs.concrete_factory;
 
 
-import designpatterns.factoryPattern.dbs.mysql.MySqlDatabaseFindByName;
-import designpatterns.factoryPattern.dbs.mysql.MysqlFIndById;
-import designpatterns.factoryPattern.dbs.mysql.MysqlFindAll;
+import designpatterns.factoryPattern.dbs.operations.mysql.MySqlDatabaseFindByName;
+import designpatterns.factoryPattern.dbs.operations.mysql.MysqlFIndById;
+import designpatterns.factoryPattern.dbs.operations.mysql.MysqlFindAll;
 import designpatterns.factoryPattern.queries.FindAll;
 import designpatterns.factoryPattern.queries.FindById;
 import designpatterns.factoryPattern.queries.FindByName;

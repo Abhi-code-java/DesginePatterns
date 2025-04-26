@@ -1,4 +1,4 @@
-package designpatterns.factoryPattern.dbs.mysql;
+package designpatterns.factoryPattern.dbs.operations.mysql;
 
 
 import designpatterns.factoryPattern.queries.FindAll;

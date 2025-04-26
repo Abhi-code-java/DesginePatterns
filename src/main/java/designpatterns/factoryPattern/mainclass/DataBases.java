@@ -1,7 +1,7 @@
 package designpatterns.factoryPattern.mainclass;
 
 
-import designpatterns.factoryPattern.dbs.factory.DbFactory;
+import designpatterns.factoryPattern.dbs.concrete_factory.DbFactory;
 import designpatterns.factoryPattern.enumfactory.EnumFactory;
 import designpatterns.factoryPattern.enums.EnumDatabase;
 

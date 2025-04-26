@@ -1,4 +1,4 @@
-package designpatterns.factoryPattern.dbs.postgres;
+package designpatterns.factoryPattern.dbs.operations.postgres;
 
 
 import designpatterns.factoryPattern.queries.FindByName;

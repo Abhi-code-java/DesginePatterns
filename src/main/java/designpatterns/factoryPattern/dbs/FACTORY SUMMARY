@@ -1,0 +1,124 @@
+DataBases --> EnumFactory --> (MySQLFactory or PostGresqlFactory) --> (FindAll, FindByName, FindById classes)
+
+1. ✅ Abstract Factory Part
+Abstract Factory = Interfaces + abstract creators.
+These are the contracts that define what operations and what families of objects we expect.
+
+Here’s your abstract factory portion:
+
+// Family of operations interfaces
+public interface FindAll {
+}
+
+public interface FindById {
+}
+
+public interface FindByName {
+}
+
+// Abstract Factory interface
+public interface DbFactory {
+    FindAll getAll();
+    FindByName findByName(String name);
+    FindById findById(int id);
+}
+
+// Helper to create factories based on Enum
+public class EnumFactory {
+    public DbFactory createEnumFactory(EnumDatabase database) {
+        switch (database) {
+            case MYSQL:
+                return new MySQLFactory();
+            case POSTGRES:
+                return new PostGresqlFactory();
+            default:
+                throw new IllegalArgumentException("NO DATABASE AVAILABLE");
+        }
+    }
+}
+
+// Enum to select database type
+public enum EnumDatabase {
+    MYSQL, POSTGRES
+}
+
+// A general class that uses the abstract factory
+public class DataBases {
+    private EnumDatabase enumDatabase;
+
+    public DataBases(EnumDatabase enumDatabase) {
+        this.enumDatabase = enumDatabase;
+    }
+
+    public void DataBaseRule() {
+        System.out.println("Rule no 1 for database");
+    }
+
+    public void DataBaseRule2() {
+        System.out.println("Rule no 2 for database");
+    }
+
+    public DbFactory createDbFactory() {
+        return new EnumFactory().createEnumFactory(enumDatabase);
+    }
+}
+2. ✅ Concrete Factory and Implementations
+Factory = Real implementations for MySQL and PostgreSQL.
+
+Here’s your concrete factory and products portion:
+
+// Concrete Factory for MySQL
+public class MySQLFactory implements DbFactory {
+    @Override
+    public FindAll getAll() {
+        return new MysqlFindAll();
+    }
+
+    @Override
+    public FindByName findByName(String name) {
+        return new MySqlDatabaseFindByName();
+    }
+
+    @Override
+    public FindById findById(int id) {
+        return new MysqlFIndById();
+    }
+}
+
+// Concrete Factory for Postgres
+public class PostGresqlFactory implements DbFactory {
+    @Override
+    public FindAll getAll() {
+        return new PostGresFindAll();
+    }
+
+    @Override
+    public FindByName findByName(String name) {
+        return new PostGresFindByName();
+    }
+
+    @Override
+    public FindById findById(int id) {
+        return new PostGesFindById();
+    }
+}
+
+// MySQL concrete products
+public class MysqlFindAll implements FindAll {
+}
+
+public class MysqlFIndById implements FindById {
+}
+
+public class MySqlDatabaseFindByName implements FindByName {
+}
+
+// Postgres concrete products
+public class PostGresFindAll implements FindAll {
+}
+
+public class PostGesFindById implements FindById {
+}
+
+public class PostGresFindByName implements FindByName {
+}

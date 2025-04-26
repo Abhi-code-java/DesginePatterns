@@ -1,9 +1,9 @@
 package designpatterns.factoryPattern.enumfactory;
 
 
-import designpatterns.factoryPattern.dbs.factory.DbFactory;
-import designpatterns.factoryPattern.dbs.factory.MySQLFactory;
-import designpatterns.factoryPattern.dbs.factory.PostGresqlFactory;
+import designpatterns.factoryPattern.dbs.concrete_factory.DbFactory;
+import designpatterns.factoryPattern.dbs.concrete_factory.MySQLFactory;
+import designpatterns.factoryPattern.dbs.concrete_factory.PostGresqlFactory;
 import designpatterns.factoryPattern.enums.EnumDatabase;
 
 public class EnumFactory {
