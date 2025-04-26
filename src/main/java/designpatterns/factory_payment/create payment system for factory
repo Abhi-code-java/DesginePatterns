@@ -1,0 +1,11 @@
+Task: Payment System Factory
+Problem: You are building a system that supports different payment methods:
+you have 3 payment methods
+paypal
+credit card
+bitcoin
+Each payment method should:
+
+processPayment(double amount)
+
+refundPayment(double amount)
